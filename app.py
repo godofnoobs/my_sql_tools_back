@@ -1,4 +1,5 @@
 import os.path
+import logging
 from flask import Flask, make_response, request
 from flask_cors import CORS
 import json
@@ -58,4 +59,5 @@ def serve_static():
 
     
 if __name__ == '__main__':
+    logging.basicConfig(filename='error.log',level=logging.DEBUG)
     app.run(debug=True)
