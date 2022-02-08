@@ -1,3 +1,4 @@
+import ssl
 import os.path
 import logging
 from flask import Flask, make_response, request
@@ -60,4 +61,4 @@ def serve_static():
     
 if __name__ == '__main__':
     logging.basicConfig(filename='error.log',level=logging.DEBUG)
-    app.run(debug=True, host='0.0.0.0', port='80')
+    app.run(debug=True, host='0.0.0.0', ssl_context='adhoc')
