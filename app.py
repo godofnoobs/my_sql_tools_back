@@ -1,4 +1,3 @@
-import ssl
 import os.path
 import logging
 from flask import Flask, make_response, request
@@ -34,13 +33,15 @@ def api_roll_up():
     )
     return res
 
-@app.route('/<path:path>')
+@app.route('/<path:path>', methods=['GET'])
 def get_resource(path):
     mimetypes = {
         ".css": "text/css",
         ".html": "text/html",
         ".js": "application/javascript",
     }
+    if path in ():
+        return
     complete_path = os.path.join(root_dir(), path)
     ext = os.path.splitext(path)[1]
     mimetype = mimetypes.get(ext, "text/html")
@@ -61,4 +62,5 @@ def serve_static():
     
 if __name__ == '__main__':
     logging.basicConfig(filename='error.log',level=logging.DEBUG)
-    app.run(debug=True, host='0.0.0.0', ssl_context='adhoc')
+    context = ('cert.pem', 'key.pem')
+    app.run(debug=True, host='0.0.0.0', port='443', ssl_context=context)
